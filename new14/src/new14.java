@@ -1,16 +1,15 @@
-// linkhashset
+// 比较器
 
-// 遍历顺序取决于插入
+import java.util.Comparator;
+import java.util.TreeSet;
 
-// 相比于hashset，多了一个双向链表记录插入顺序，有利于遍历
-
-
-import java.util.LinkedHashSet;
-import java.util.Objects;
-
-public class new11 {
+public class new14 {
     public static void main(String[] args){
-        LinkedHashSet<per> ha = new LinkedHashSet<>();
+
+        mycmp cmp = new mycmp();
+
+        TreeSet<per> ha = new TreeSet<>(cmp);
+        // 无参默认自然排序
 
         per p1 = new per(1,"ca");
         per p2 = new per(4,"hk");
@@ -35,9 +34,10 @@ public class new11 {
             System.out.println();
         }
 
-
     }
+
 }
+
 
 class per{
 
@@ -53,16 +53,20 @@ class per{
         System.out.println("i'm "+id);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        per per = (per) o;
-        return id == per.id && Objects.equals(name, per.name);
-    }
+}
+
+// 比较器
+
+class mycmp implements Comparator<per> {
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public int compare(per o1, per o2) {
+
+        int res = o1.id-o2.id;
+        if (res==0){
+            res = o1.name.compareTo(o2.name);
+        }
+
+        return res;
     }
 }
